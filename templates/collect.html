@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Sentiment Analysis</title>
+<script type="text/javascript">
+
+function UpdateSubmitButton(form)
+{
+	var e = form.getElementsByTagName('input');
+	var checked = 0;
+	var total = 0;
+	for (var i = 0; i < e.length; i++) {
+	    if (e[i].type == 'text') {
+	    		total += 1;
+	    		if (!(e[i].value==null||e[i].value==""))
+	        	checked += 1;
+	    }
+	}
+	var left = total-checked;
+	var submit = document.getElementsByName('submit')[0];
+    if (left == 0)
+	{
+		submit.value = "Submit";
+		submit.disabled = false;
+        return true;
+	}
+	else
+	{
+		submit.value = "Submit (" + left + " left)";
+        return false;
+	}
+}
+
+
+function DisableAllRadio()
+{
+    var e = document.getElementsByTagName('input');
+    for (var i = 0; i < e.length; i++) {
+        if (e[i].type == 'radio') {
+                e[i].disabled = true;
+                e[i].checked = false;
+        }
+        if (e[i].type == 'submit')
+            e[i].disabled = true;
+        
+    }
+}
+
+
+function EnableAllRadio()
+{
+    var e = document.getElementsByTagName('input');
+    for (var i = 0; i < e.length; i++) {
+        if (e[i].type == 'text') {
+                e[i].disabled = false;
+                e[i].checked = false;
+        }
+        if (e[i].type == 'submit')
+            e[i].disabled = false;
+    }
+}
+
+        
+</script>
+    <style type="text/css">
+        p {
+            line-height: 1.5em;
+        }
+        .container {
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        .submit {
+            height: 200px;
+            width: 120px;
+            line-height: 2em;
+            font-size: 4em;
+        }
+    </style>
+</head>
+
+<body onload="EnableAllRadio()">
+<div class="container">
+ <form id="mturk_form" action="/submit/"  onsubmit="return UpdateSubmitButton(this)" method="post">
+     {% csrf_token %}
+    {{ content}}
+     {% for q in questions %}
+        <p>Question No.{{forloop.counter}}: <input type="text" name="{{q.id}}"  /> <br/>
+        </p>
+     {% endfor %}
+    <br/>
+     <br/>
+    <!--submit button-->
+    <input class="submit" type="submit" name="submit" disabled="true" value="Submit"/>
+    <br/>
+     <br/>
+    <!--get these three variables-->
+    <input type="hidden" name="mturk"  value="{{mturk}}" />
+    <input type="hidden" name="db"  value="{{db}}" />
+    <input type="hidden" name="newhitId"  value="{{newhitId}}" />
+    <input type="hidden" name="assignmentId"  value="{{assignmentId}}" />
+    <input type="hidden" name="workerId" value="{{workerId}}"  />
+    <input type="hidden" name="labels" value="{{labels}}" />
+    <input type="hidden" name="hitGroupId" value="{{hitGroupId}}" />
+     <input type="hidden" name="hitId" value="{{hitId}}" />
+
+
+    </form>
+</div>
+</body>
+</html>

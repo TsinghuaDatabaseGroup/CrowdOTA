@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Sentiment Analysis</title>
+<script type="text/javascript">
+
+function UpdateSubmitButton(form)
+{
+	var e = form.getElementsByTagName('input');
+	var checked = 0;
+	var total = 0;
+	for (var i = 0; i < e.length; i++) {
+	    if (e[i].type == 'radio') {
+	    		total += 1;
+	    		if (e[i].checked)
+	        	checked += 1;
+	    }
+	}
+	var left = total/{{cicCount}}-checked;
+	var submit = document.getElementsByName('submit')[0];
+	
+	if (left == 0)
+	{
+		submit.value = "Submit";
+		submit.disabled = false;
+	}
+	else
+	{
+		submit.value = "Submit (" + left + " left)"
+	}
+}
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+}
+
+function DisableAllRadio()
+{
+    var e = document.getElementsByTagName('input');
+    for (var i = 0; i < e.length; i++) {
+        if (e[i].type == 'radio') {
+                e[i].disabled = true;
+                e[i].checked = false;
+        }
+        if (e[i].type == 'submit')
+            e[i].disabled = false;
+        
+    }
+}
+
+
+function assID()
+{
+    var e = document.getElementsByTagName('input');
+    for (var i = 0; i < e.length; i++) {
+        if (e[i].name == 'radio') {
+            value = guid()
+        }
+    }
+}
+
+        
+</script>
+    <style type="text/css">
+        p {
+            line-height: 1.5em;
+        }
+        .container {
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        .submit {
+            height: 200px;
+            width: 120px;
+            line-height: 2em;
+            font-size: 4em;
+        }
+    </style>
+</head>
+
+<body onload="DisableAllRadio()">
+<div class="container">
+ <form id="mturk_form" action="{{ submit }}" method="get">
+     <br/>
+     <br/>
+    <!--get these three variables-->
+     assignmentId<input type="text" name="assignmentId" value="" onfocus="{value = guid()}" /><br>
+     workerId    <input type="text" name="workerId"/><br>
+
+
+     <input class="submit" type="submit" name="submit" value="Submit"/>
+
+ </form>
+</div>
+</body>
+</html>

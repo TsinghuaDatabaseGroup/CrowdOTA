@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<title>Entity Resolution</title>
+</head>
+
+
+<script type="text/javascript">
+
+function UpdateSubmitButton(form)
+
+{
+
+    var e = form.getElementsByTagName('input');
+
+    var checked = 0;
+
+    var total = 0;
+
+    for (var i = 0; i < e.length; i++) {
+
+        if (e[i].type == 'radio') {
+
+                total += 1;
+
+                if (e[i].checked)
+
+                checked += 1;
+
+        }
+
+    }
+
+    var left = total/2-checked;
+
+    var submit = document.getElementsByName('submit')[0];
+
+    
+
+    if (left == 0)
+
+    {
+
+        submit.value = "Submit";
+
+        submit.disabled = false;
+
+    }
+
+    else
+
+    {
+
+        submit.value = "Submit (" + left + " left)"
+
+    }
+
+}
+
+function DisableAllRadio()
+
+{
+
+    var e = document.getElementsByTagName('input');
+
+    for (var i = 0; i < e.length; i++) {
+
+        if (e[i].type == 'radio') {
+
+                e[i].disabled = true;
+
+                e[i].checked = false;
+
+        }
+
+        if (e[i].type == 'submit')
+
+            e[i].disabled = true;
+
+        
+
+    }
+
+}
+
+function EnableAllRadio()
+
+{
+
+    var e = document.getElementsByTagName('input');
+
+    for (var i = 0; i < e.length; i++) {
+
+        if (e[i].type == 'radio') {
+
+                e[i].disabled = false;
+
+                e[i].checked = false;
+
+        }
+
+        if (e[i].type == 'submit')
+
+            e[i].disabled = true;
+
+    }
+
+}
+
+
+
+
+
+function ispreviewmode() {
+
+
+
+  var paramstr = window.location.search.substring(1);
+
+  var parampairs = paramstr.split("&");
+
+  for (i in parampairs) 
+
+  {
+
+    var pair = parampairs[i].split("=");
+
+    if (pair[0] == "assignmentId") 
+
+    {
+
+      if (pair[1] == "ASSIGNMENT_ID_NOT_AVAILABLE") 
+
+      {
+
+        DisableAllRadio();
+
+        document.getElementById("previewnotice").innerHTML =
+
+            "<p><h2><font color=\"red\">You are previewing this HIT.  To perform this HIT, please accept it.</font></h2></p>";
+
+      
+
+      } 
+
+      else 
+
+      {
+
+        document.getElementById("previewnotice").innerHTML = "";
+
+        EnableAllRadio();
+
+      }
+
+      return;
+
+    }
+
+  }//for  is to find the assignmentId
+
+}
+
+
+
+        
+
+</script>    
+<style>
+    .container {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    p {
+        line-height: 1.5em;
+    }
+
+    .hint {
+        font-size: 1.2em;
+    }
+    b {
+        color: red;
+    }
+</style>
+
+</head>
+
+
+
+<body onload="ispreviewmode()">
+
+<div class="container">
+
+
+<!-- https://www.mturk.com/mturk/externalSubmit -->
+
+    <form id="mturk_form" action="" method="get">
+
+      <p class="hint">{{ title }}</p><br/>
+       <p>     {{ description }}
+        </p>
+    <!--get these three variables-->
+
+    <input type="hidden" name="index"  value="" />
+
+    <input type="hidden" name="dbname"  value="" />
+
+    <input type="hidden" name="hitId"  value="" />
+
+    <input type="hidden" name="assignmentId"  value="ASSIGNMENT_ID_NOT_AVAILABLE" />
+
+    <input type="hidden" name="workerId" value=""  />
+
+    <!--submit button-->
+
+
+    </form>
+</div>
+</body>
+
+</html>
+

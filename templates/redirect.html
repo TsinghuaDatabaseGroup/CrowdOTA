@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>You've finished!</title>
+</head>
+<body>
+    <form id="mturk" method="post" action="{{ mturk }}">
+        <input type="hidden" name="assignmentId" value="{{ assignmentId }}" />
+        <input type="hidden" name="foo" value="bar" />
+    </form>
+<script>
+    var form = document.getElementById("mturk");
+//    form.submit();
+</script>
+</body>
+</html>

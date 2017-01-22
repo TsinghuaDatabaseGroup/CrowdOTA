@@ -1,0 +1,9 @@
+pid =
+cert = /etc/letsencrypt/live/ai233.ml/fullchain.pem
+key = /etc/letsencrypt/live/ai233.ml/privkey.pem
+debug = 7
+foreground = yes
+
+[https]
+accept = 443
+connect = 8000
